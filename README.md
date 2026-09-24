@@ -115,6 +115,14 @@ KitoMediaTime.remainingString(currentTime: 10, duration: 202)   // "-3:12"
 `KitoSampleAudio.makeFile(.sunrise)` renders a 30-second synth piece into a cached temporary file,
 and `KitoSampleAudio.playlist()` gives you four ready-made tracks. Both audio helpers work offline.
 
+## Right-to-left
+
+Titles, top bars, toolbars, the queue and chapter lists mirror with the layout direction. Playback
+itself stays left to right, as Apple's players do: the scrubber, `KitoWaveformView`, elapsed and
+remaining times, the transport buttons (previous, skip, play, next) and the double-tap seek zones
+(left = back 10 s, right = forward 10 s) keep the direction of the tape in every language. The
+package sets this itself; there is nothing to configure.
+
 ## App setup
 
 - **Background audio, lock-screen playback and Picture in Picture:** add the `audio` background

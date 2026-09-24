@@ -242,11 +242,15 @@ struct VideoChrome: View {
                         .allowsHitTesting(false)
                         .transition(.opacity)
                 }
-                ForEach(hearts) { heart in
-                    HeartBurstView(burst: heart, reduceMotion: reduceMotion)
-                        .position(heart.location)
-                        .allowsHitTesting(false)
+                ZStack {
+                    ForEach(hearts) { heart in
+                        HeartBurstView(burst: heart, reduceMotion: reduceMotion)
+                            .position(heart.location)
+                            .allowsHitTesting(false)
+                    }
                 }
+                // Tap locations are physical, so place the hearts physically.
+                .environment(\.layoutDirection, .leftToRight)
                 switch style {
                 case .cinema: cinemaChrome(size: proxy.size)
                 case .minimal: minimalChrome
@@ -334,6 +338,7 @@ struct VideoChrome: View {
                         model.isFullscreen = true
                     }
                 }
+                .environment(\.layoutDirection, .leftToRight)
             }
             .padding(theme.spacing.lg)
         }
@@ -365,6 +370,7 @@ struct VideoChrome: View {
                         }
                         SkipButton(seconds: 10, size: compact ? 24 : 30) { skip(10) }
                     }
+                    .environment(\.layoutDirection, .leftToRight)
                     Spacer(minLength: 0)
                     VStack(spacing: 2) {
                         if let chapter = model.currentChapter {
@@ -382,6 +388,7 @@ struct VideoChrome: View {
                         }
                         .font(theme.typography.caption.monospacedDigit().weight(.medium))
                         .foregroundStyle(.white.opacity(0.8))
+                        .environment(\.layoutDirection, .leftToRight)
                     }
                 }
                 .padding(.horizontal, theme.spacing.lg)
@@ -476,6 +483,7 @@ struct VideoChrome: View {
                             iconButton("arrow.down.right.and.arrow.up.left", label: "Close full screen", size: 14) { onClose?() }
                         }
                     }
+                    .environment(\.layoutDirection, .leftToRight)
                     .padding(.horizontal, theme.spacing.md)
                     .padding(.bottom, theme.spacing.xs)
                 }
@@ -640,6 +648,8 @@ struct VideoChrome: View {
                     .onEnded { doubleTap(at: $0.location, size: size) }
                     .exclusively(before: SpatialTapGesture(count: 1).onEnded { singleTap(at: $0.location, size: size) })
             )
+            // Seek zones, ripples and hearts all work in physical left-to-right coordinates.
+            .environment(\.layoutDirection, .leftToRight)
             .accessibilityElement()
             .accessibilityLabel(config.title ?? "Video")
             .accessibilityValue(model.isPlaying ? "Playing, \(KitoMediaTime.spoken(model.currentTime))" : "Paused")
@@ -909,6 +919,8 @@ struct SeekRippleView: View {
         }
         .frame(width: size.width, height: size.height)
         .clipped()
+        // Seek zones are physical (left = back), like the transport controls.
+        .environment(\.layoutDirection, .leftToRight)
         .accessibilityHidden(true)
     }
 }

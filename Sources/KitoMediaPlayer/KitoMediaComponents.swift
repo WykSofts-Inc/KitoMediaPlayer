@@ -354,7 +354,7 @@ extension View {
 // MARK: - Scrubber
 
 /// The video scrubber: chapter gaps, buffered range, a thumb that grows while dragging and a
-/// time bubble with the chapter name.
+/// time bubble with the chapter name. Always runs left to right, like the playback controls.
 struct KitoScrubber: View {
     let currentTime: TimeInterval
     let duration: TimeInterval
@@ -430,6 +430,7 @@ struct KitoScrubber: View {
             )
         }
         .frame(height: thin ? 18 : 28)
+        .environment(\.layoutDirection, .leftToRight)
         .animation(.spring(response: 0.3, dampingFraction: 0.75), value: isDragging)
         .sensoryFeedback(.impact(weight: .light), trigger: dragFraction.flatMap { KitoChapter.index(at: $0 * duration, in: chapters) } ?? -1)
         .accessibilityElement()
