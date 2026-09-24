@@ -1,5 +1,7 @@
 # KitoMediaPlayer
 
+**[Documentation](https://wyksofts-inc.github.io/KitoMediaPlayer/documentation/kitomediaplayer/)**
+
 Video and audio players for SwiftUI, with custom chrome on top of `AVPlayer`. The video player has
 four styles, from cinema to Reels. The audio player has a mini player that expands into a full
 "now playing" screen. There are waveforms, podcast chapters, a sleep timer and lock-screen
