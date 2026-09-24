@@ -58,6 +58,8 @@ public enum KitoTapZone: Equatable, Sendable {
 
     /// The zone for a tap at `x` in a view `width` points wide. `sideFraction` is how much of
     /// each edge counts as a seek zone (35% by default, like most video apps).
+    /// `x` is measured from the physical left edge: left is back in every layout direction,
+    /// matching the left-to-right scrubber and transport controls.
     public static func zone(atX x: CGFloat, width: CGFloat, sideFraction: CGFloat = 0.35) -> KitoTapZone {
         guard width > 0 else { return .center }
         let fraction = min(max(0, x / width), 1)

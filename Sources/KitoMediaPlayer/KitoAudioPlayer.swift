@@ -169,6 +169,7 @@ struct MiniBar: View {
                     }
             }
             .frame(height: 2.5)
+            .environment(\.layoutDirection, .leftToRight)
             .padding(.horizontal, theme.spacing.xl)
             .padding(.bottom, 3)
             .allowsHitTesting(false)
@@ -379,6 +380,7 @@ struct FullAudioPlayer: View {
             .font(theme.typography.caption.monospacedDigit().weight(.medium))
             .opacity(0.7)
         }
+        .environment(\.layoutDirection, .leftToRight)
     }
 
     private func transport(compact: Bool) -> some View {
@@ -408,6 +410,8 @@ struct FullAudioPlayer: View {
             Spacer()
             transportButton("forward.fill", size: 24, label: "Next track", disabled: !model.queue.hasNext && model.queue.items.count < 2) { model.next() }
         }
+        // Transport controls follow the direction of playback, not of reading.
+        .environment(\.layoutDirection, .leftToRight)
     }
 
     private func transportButton(_ symbol: String, size: CGFloat, label: String, disabled: Bool, action: @escaping () -> Void) -> some View {

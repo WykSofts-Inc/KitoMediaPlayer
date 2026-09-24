@@ -223,6 +223,9 @@ public struct KitoWaveformView: View {
             .gesture(scrubGesture(width: proxy.size.width), including: onSeek == nil ? .none : .all)
             .animation(.spring(response: 0.3, dampingFraction: 0.8), value: dragProgress == nil)
         }
+        // A playback timeline: stays left to right in every layout direction, like the transport
+        // controls, so the physical drag location maps straight onto the fill.
+        .environment(\.layoutDirection, .leftToRight)
         .sensoryFeedback(.selection, trigger: dragProgress.map { Int($0 * 24) } ?? -1)
         .onAppear(perform: animateIn)
         .onChange(of: samples) { animateIn() }
